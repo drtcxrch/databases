@@ -3,23 +3,23 @@ CREATE DATABASE chat;
 USE chat;
 
 CREATE TABLE users (
-  id int,
-  username varchar(255),
-  friends set,
+  id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL,
+  friends JSON,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE rooms (
-  id int,
-  room_name varchar(255),
+  id INT NOT NULL AUTO_INCREMENT,
+  room_name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE messages (
-  id int,
-  user_message varchar(255),
-  id_users int,
-  id_rooms int,
+  id INT NOT NULL AUTO_INCREMENT,
+  user_message VARCHAR(255) NOT NULL,
+  id_users INT,
+  id_rooms INT,
   PRIMARY KEY (id),
   FOREIGN KEY (id_users) REFERENCES users(id),
   FOREIGN KEY (id_rooms) REFERENCES rooms(id)
