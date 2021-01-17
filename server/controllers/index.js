@@ -7,18 +7,17 @@ module.exports = {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send(results);
+          res.json(results);
         }
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      // console.log('REQ.BODY IS ', req.body);
-      models.messages.post(req.body, (err, results) => {
+      let data = [req.body.message, req.body.username, req.body.roomname];
+      models.messages.post(data, (err, results) => {
         if (err) {
           console.log(err);
           res.status(400).send(err);
         } else {
-          console.log('RESULTS', results);
           res.status(200).send(results);
         }
       });
@@ -32,7 +31,7 @@ module.exports = {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send(results);
+          res.json(results);
         }
       });
     },
@@ -41,7 +40,7 @@ module.exports = {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send(results);
+          res.sendStatus(201);
         }
       });
     }

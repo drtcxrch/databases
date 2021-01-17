@@ -3,7 +3,8 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      db.query('SELECT * FROM messages;', function (error, results, fields) {
+      const query = 'SELECT m.id, m.userMessage, m.roomname, u.username FROM messages m LEFT OUTER JOIN users u ON (m.id_user = u.id) ORDER BY m.id DESC;';
+      db.query(query, (error, results) => {
         if (error) {
           callback(error);
         } else {
@@ -12,7 +13,8 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (body, callback) {
-      db.query('INSERT INTO messages (user_message, roomname) VALUES (?, ?)', body, function (error, results, fields) {
+      const query = 'INSERT INTO messages (userMessage, id_user, roomname) VALUES (?,(SELECT id FROM users WHERE username = ? LIMIT 1), ?)';
+      db.query(query, body, (error, results) => {
         if (error) {
           callback(error);
         } else {
@@ -25,7 +27,8 @@ module.exports = {
   users: {
     // Ditto as above.
     get: function (callback) {
-      db.query('SELECT username FROM users;', function (error, results, fields) {
+      const query = 'SELECT * FROM users;';
+      db.query(query, (error, results) => {
         if (error) {
           callback(error);
         } else {
@@ -34,7 +37,8 @@ module.exports = {
       });
     },
     post: function (username, callback) {
-      db.query('INSERT INTO users (username) VALUES (?);', username, function (error, results, fields) {
+      const query = 'INSERT INTO users (username) VALUES (?);';
+      db.query(query, username, (error, results) => {
         if (error) {
           callback(error);
         } else {
