@@ -5,6 +5,8 @@ var mysql = require('mysql');
 var request = require('request'); // You might need to npm install the request module!
 var expect = require('chai').expect;
 
+var Sequelize = require('sequelize');
+
 describe('Persistent Node Chat Server', function() {
   var dbConnection;
 
@@ -26,6 +28,7 @@ describe('Persistent Node Chat Server', function() {
   afterEach(function() {
     dbConnection.end();
   });
+
 
   it('Should insert posted messages to the DB', function(done) {
     // Post the user to the chat server.
@@ -67,8 +70,8 @@ describe('Persistent Node Chat Server', function() {
 
   it('Should output all messages from the DB', function(done) {
     // Let's insert a message into the db
-    var queryString = 'INSERT INTO messages(userMessage, id_user, roomname) VALUES (?, ?, ?)';
-    var queryArgs = ['Men like you can never change!', 1, 'Hello'];
+    var queryString = 'INSERT INTO messages (userMessage, roomname) VALUES (?, ?)';
+    var queryArgs = ['Men like you can never change!', 'Hello'];
     // TODO - The exact query string and query args to use
     // here depend on the schema you design, so I'll leave
     // them up to you. */

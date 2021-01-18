@@ -3,7 +3,7 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      const query = 'SELECT m.id, m.userMessage, m.roomname, u.username FROM messages m LEFT OUTER JOIN users u ON (m.id_user = u.id) ORDER BY m.id DESC;';
+      const query = 'SELECT m.id, m.userMessage, m.roomname, u.username FROM messages m LEFT OUTER JOIN users u ON (m.idUser = u.id) ORDER BY m.id DESC;';
       db.query(query, (error, results) => {
         if (error) {
           callback(error);
@@ -13,7 +13,7 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (body, callback) {
-      const query = 'INSERT INTO messages (userMessage, id_user, roomname) VALUES (?,(SELECT id FROM users WHERE username = ? LIMIT 1), ?)';
+      const query = 'INSERT INTO messages (userMessage, idUser, roomname) VALUES (?,(SELECT id FROM users WHERE username = ? LIMIT 1), ?)';
       db.query(query, body, (error, results) => {
         if (error) {
           callback(error);
@@ -57,7 +57,7 @@ module.exports = {
 //     throw error;
 //   } else {
 //     roomId = results.insertId;
-//     db.query(`INSERT INTO messages (user_message, id_users, id_rooms)
+//     db.query(`INSERT INTO messages (user_message, idUser, id_rooms)
 //     VALUES (${object.message}, u.id WHERE u.username = ${object.username}, ${roomId});`, function (error, results, fields) {
 //       if (error) {
 //         throw error;
