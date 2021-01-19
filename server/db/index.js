@@ -3,19 +3,18 @@ var db = new Sequelize('chat', 'root', '');
 
 var User = db.define('User', {
   username: Sequelize.STRING
-});
+}, {timestamps: false});
 
 var Message = db.define('Message', {
-  idUser: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'users',
-      key: 'id'
-    }
-  },
   userMessage: Sequelize.STRING,
   roomname: Sequelize.STRING
-});
+}, {timestamps: false});
+
+// idUser: {
+//   type: Sequelize.INTEGER,
+//   references: 'User',
+//   referenceKey: 'idUser'
+// },
 
 User.hasMany(Message);
 Message.belongsTo(User);
