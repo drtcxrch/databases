@@ -6,7 +6,13 @@ var User = db.define('User', {
 });
 
 var Message = db.define('Message', {
-  idUser: Sequelize.INTEGER,
+  idUser: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'users',
+      key: 'id'
+    }
+  },
   userMessage: Sequelize.STRING,
   roomname: Sequelize.STRING
 });
